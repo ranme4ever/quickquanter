@@ -1,0 +1,13 @@
+body{
+	padding-top:50px;
+	height:100%;
+}
+.form-layout{
+    max-width:640px;
+    padding:15px;
+    margin:0 auto;
+}
+.btn-submit
+{
+    float:right;
+}

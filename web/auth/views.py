@@ -1,27 +1,31 @@
+#-*- coding:utf-8 -*-
 import tornado.web
 from db.mysql import dbconnector
 from web.auth.models import User
-class sigin(tornado.web.RequestHandler):
+from web.auth.forms import SignupForm
+class signin(tornado.web.RequestHandler):
     def get(self):
-        self.write("hello auth sigin")
+        self.render("auth/signin.html")
 
-class sigout(tornado.web.RequestHandler):
+class signup(tornado.web.RequestHandler):
     def get(self):
-        self.render("auth/signup.html")
+        form = SignupForm()
+        self.render("auth/signup.html",form=form)
     def post(self):
-        user = new User(self)
-        errors = user.validate()
-        if len(errors)<=0:
-            db = dbconnector().db;
-            user = db.get('select * from t_user where username="%s"'%(username))
+        user =  User(self)
+        form = SignupForm()
+        form.fillData(user)
+        if form.validate():
+            db = dbconnector().db
+            user = db.get('select * from t_user where username="%s"'%(user.username))
             if not user:
-                insertsql = "INSERT INTO t_user (username,email,password) VALUES ('%s','%s','%s')"%(username,email,pwd)
+                insertsql = "INSERT INTO t_user (username,email,password) VALUES ('%s','%s','%s')"%(user.username,user.email,user.password)
                 rel = db.execute(insertsql)
                 self.write(str(rel))
                 return
             else:
-                errors.append("user %s is exists!"%username)
-        self.render("auth/signup.html",errors)
+                form.errors.append("user %s already is exists!"%user.username)
+        self.render("auth/signup.html",form=form)
 
 class logout(tornado.web.RequestHandler):
     def get(self):

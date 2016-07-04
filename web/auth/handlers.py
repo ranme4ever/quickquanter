@@ -1,7 +1,7 @@
 from web.auth import views
 
 handlers = [
-    (r'/auth/signin', views.sigin),
-    (r'/auth/signup', views.sigout),
+    (r'/auth/signin', views.signin),
+    (r'/auth/signup', views.signup),
     (r'/auth/logout', views.logout),
 ]

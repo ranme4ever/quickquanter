@@ -1,0 +1,51 @@
+body{
+	padding-top:50px;
+	height:100%;
+}
+.errorlist{
+	color:red
+}
+.form-layout{
+	max-width:520px;
+	padding:15px;
+	margin:0 auto;
+}
+.contentWrapper{
+	height:100%;
+	width:100%;
+}
+.side-bar{
+	left:0;
+	position:fixed;
+	height:100%;
+	background-color:#4b4b4b;
+	width:88px;
+	z-index:10;
+}
+.workplace{
+	height:100%;
+	width:100%;
+	position:absolute;
+	padding-left:88px;
+}
+.mid-container{
+	border-right:1px solid #C7C7C7;
+	height:100%;
+	padding:0px;
+}
+.right-container{
+	height:100%;
+	padding:0px;
+}
+.toolbar-container{
+	width:100%;
+	border-bottom:1px solid #C7C7C7; 
+	padding:5px
+}
+.btn-submit{
+	float:right;
+}
+.current{
+	background-color:#c7c7c7;
+}
+.CodeMirror {border: 1px solid black; font-size:13px}

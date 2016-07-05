@@ -1,9 +1,9 @@
 #-*- coding:utf-8 -*-
-class Field():
+class Field(object):
     def __init__(self):
-        self.value = None
+        self.value = ""
         pass
-    def set(self,value):
+    def setValue(self,value):
         self.value = value
 
     def validate(self):
@@ -11,6 +11,7 @@ class Field():
 
 class TextField(Field):
     def __init__(self,label,max_length,required):
+        super(TextField,self).__init__()
         self.label = label
         self.max_length = max_length
         self.required = required
@@ -30,6 +31,7 @@ class TextField(Field):
 
 class PasswordInput(Field):
     def __init__(self,label,max_length,required):
+        super(PasswordInput,self).__init__()
         self.label = label
         self.required = required
         self.max_length = max_length

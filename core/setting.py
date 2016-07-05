@@ -1,4 +1,4 @@
-import os
+import os,sys
 from web import auth,api,home,policy
 from notebook.services.kernels.kernelmanager import MappingKernelManager
 from traitlets.config.configurable import SingletonConfigurable
@@ -15,7 +15,13 @@ setting = {
     "static_path": os.path.join(BASE_DIR, "static"),
     "template_path" : os.path.join(BASE_DIR, "templates"),
     "kernel_manager":MappingKernelManager(),
+    "login_url":"/auth/signin",
+    "cookie_secret":"59a412f98672b7dad1ea84bf99c82716",
+    "debug":True
 }
+reload(sys)
+sys.setdefaultencoding("utf8")
+
 
 class Setting(SingletonConfigurable):
     def __init__(self):

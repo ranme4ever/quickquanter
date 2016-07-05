@@ -7,3 +7,9 @@ CREATE TABLE t_user ( id INT(8) NOT NULL PRIMARY KEY auto_increment,
                         username VARCHAR(32) NOT NULL,
                         password VARCHAR(32) NOT NULL,
                         email VARCHAR(64) NOT NULL)DEFAULT CHARSET=utf8;
+CREATE TABLE t_rule ( id INT(8) NOT NULL PRIMARY KEY auto_increment,
+                        name VARCHAR(32) NOT NULL,
+                        description VARCHAR(255),
+                        user_id INT,
+                        FOREIGN KEY(user_id) REFERENCES  t_user(id) ON DELETE CASCADE
+                        )DEFAULT CHARSET=utf8;

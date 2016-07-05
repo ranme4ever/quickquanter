@@ -1,0 +1,26 @@
+{% include '../base.html' %}
+<link href="{{static_url('css/codemirror.css')}}" rel="stylesheet">
+<script src="{{static_url('js/codemirror.js')}}"></script>
+<script src="{{static_url('js/python/python.js')}}"></script>
+<script src="{{static_url('js/socket.io.js')}}"></script>
+
+<div class="contentWrapper">
+	<div class="side-bar">
+	   <div style="padding-top:106px">
+	        <ul class="nav nav-sidebar">
+                <li class="{% if type == 'rule' %}current{% end %}">
+                    <a href="/policy/rule">
+				        <span class="glyphicon glyphicon-list-alt"/><br/>
+				        <span >Rule</span>
+			        </a>
+                </li>
+                <li class="{% if type == 'strategy'%}current{% end %}">
+                    <a href="/policy/strategy">
+                        <span class="glyphicon glyphicon-stats"/>
+                        <span >Strategy</span>
+                    </a>
+                </li>
+            </ul>
+	   </div>
+	</div>
+</div>

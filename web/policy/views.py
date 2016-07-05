@@ -6,14 +6,17 @@ from web.policy.forms import RuleForm
 
 class Rule(LoginRequiredHandler):
     @tornado.web.authenticated
-    def get(self):
+    def get(self,rule_id=None):
         db = dbconnector().db
         username = tornado.escape.xhtml_escape(self.current_user)
         user = db.get("select id from t_user where username='%s'"%username)
         rules = db.query("select * from t_rule where user_id=%s"%user["id"])
         if not rules:
             rules = []
-        self.render("policy/policy.html",rules=rules)
+        crule = None
+        if rule_id:
+            crule = db.get("select * from t_rule where id=%s"%rule_id)
+        self.render("policy/policy.html",rules=rules,crule=crule)
 
 class RuleCreate(LoginRequiredHandler):
     def getUser(self,db):

@@ -20,6 +20,9 @@
 		</div>
 		<div class="col-md-9">
 			{% block content%}
+				{% if crule %}
+					{{crule["code"]}}
+				{% end %}
 			{% end%}
 		</div>
 	</div>

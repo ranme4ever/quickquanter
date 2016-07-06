@@ -12,17 +12,23 @@ class Rule(LoginRequiredHandler):
         user = db.get("select id from t_user where username='%s'"%username)
         rules = db.query("select * from t_rule where user_id=%s"%user["id"])
         if not rules:
-            rules = []
-        crule = None
+            self.redirect("/policy/rule/create")
+            return;
         if rule_id:
             crule = db.get("select * from t_rule where id=%s"%rule_id)
+        else:
+            crule = rules[0]
         self.render("policy/policy.html",rules=rules,crule=crule)
+    def post(self,rule_id):
+        code = self.get_argument("code")
+        db = dbconnector().db
+        db.execute("update t_rule set code='%s' where id=%s"%(code,rule_id))
+        self.write("success")
 
 class RuleCreate(LoginRequiredHandler):
     def getUser(self,db):
         username = tornado.escape.xhtml_escape(self.current_user)
         user = db.get("select id from t_user where username='%s'"%username)
-
         return user
     def getRules(self,db,userid):
         return db.query("select * from t_rule where user_id=%s"%userid)
@@ -35,7 +41,7 @@ class RuleCreate(LoginRequiredHandler):
         rules = self.getRules(db,user["id"])
         if not rules:
             rules = []
-        self.render("policy/create.html",form=form,rules=rules)
+        self.render("policy/create.html",form=form,rules=rules,crule=None)
         pass
     def post(self):
         form = RuleForm()

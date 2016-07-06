@@ -14,15 +14,82 @@
 			{% for item in rules%}
 				<li class="list-group-item">
 					<a href="/policy/rule/{{item.id}}">{{item.name}}</a>
+                    {% if crule and  item.id == crule.id%}
+					<span style="float:right" class="glyphicon glyphicon-menu-right"></span>
+					{% end%}
 				</li>
 			{%end%}
 			</ul>
 		</div>
 		<div class="col-md-9">
 			{% block content%}
-				{% if crule %}
-					{{crule["code"]}}
-				{% end %}
+				<div class="toolbar-container">
+					<ul class="nav nav-pills">
+					    <li role="presentation" >
+						<button class="btn btn-default" onclick="saveCode(runRule)">
+						    <span class="glyphicon glyphicon-triangle-right"></span>
+						</button>
+					    </li>
+					    <li role="presentation">
+						<button class="btn btn-default" href="#">
+						    <span class="glyphicon glyphicon-floppy-save" onclick="saveCode()"></span>
+						</button>
+					    </li>
+					    <li>
+						<button class="btn btn-default" >
+						    <span class="glyphicon glyphicon-time"></span>
+						</button>
+					    </li>
+					</ul>
+				</div>
+					<div style="width:100%;padding:5px">
+			 	    <textarea id="codeTextarea" style="width:100%">
+						{% if crule%}
+							{{crule['code']}}
+						{% end %}
+				    </textarea>
+				</div>
+				<div style="width:100%;padding:5px">
+					<div style="color:#b7b7b7;font-size:12px;text-align:left">按Enter 保存</div>
+				</div>
+				<div style="width:100%;height:100%;padding:5px" id="board"></div>
+				<script type='text/javascript'>
+				var board =  document.getElementById("board")
+				var editorElm = document.getElementById('codeTextarea');
+				var codeEditor = CodeMirror.fromTextArea(editorElm, {
+				    mode: "text/x-python",
+				    lineNumbers: true,
+				    theme:'default',
+				    content:codeTextarea.text
+				});
+				codeEditor.setSize("auto","auto")
+				function saveCode(callback){
+						$.ajax({
+							type:'POST',
+							url:'/policy/rule/{{crule["id"]}}',
+							data:{
+								'code':codeEditor.getValue()
+								},
+							success:function(){
+								console.log("save successed")
+								if(callback)
+									callback()
+							},
+							dataType:"json",
+							beforeSend: function(xhr, settings){
+						        	//var csrftoken = getCookie('csrftoken');
+						        	//xhr.setRequestHeader("X-CSRFToken", csrftoken);
+						  },
+						} )
+
+				}
+				codeEditor.on("keyup",function(target,e){
+					if (e.keyCode=="13"){//ente
+						saveCode()
+					}
+				})
+				</script>
+
 			{% end%}
 		</div>
 	</div>

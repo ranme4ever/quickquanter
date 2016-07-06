@@ -1,4 +1,3 @@
-
 from jupyter_core.application import JupyterApp
 from tornado import httpserver,web
 from zmq.eventloop import ioloop

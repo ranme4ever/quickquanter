@@ -26,13 +26,13 @@
 				<div class="toolbar-container">
 					<ul class="nav nav-pills">
 					    <li role="presentation" >
-						<button class="btn btn-default" onclick="saveCode(runRule)">
+						<button class="btn btn-default" onclick="saveCode({{crule['id']}},runRule)">
 						    <span class="glyphicon glyphicon-triangle-right"></span>
 						</button>
 					    </li>
 					    <li role="presentation">
 						<button class="btn btn-default" href="#">
-						    <span class="glyphicon glyphicon-floppy-save" onclick="saveCode()"></span>
+						    <span class="glyphicon glyphicon-floppy-save" onclick="saveCode({{crule['id']}})"></span>
 						</button>
 					    </li>
 					    <li>
@@ -53,43 +53,7 @@
 					<div style="color:#b7b7b7;font-size:12px;text-align:left">按Enter 保存</div>
 				</div>
 				<div style="width:100%;height:100%;padding:5px" id="board"></div>
-				<script type='text/javascript'>
-				var board =  document.getElementById("board")
-				var editorElm = document.getElementById('codeTextarea');
-				var codeEditor = CodeMirror.fromTextArea(editorElm, {
-				    mode: "text/x-python",
-				    lineNumbers: true,
-				    theme:'default',
-				    content:codeTextarea.text
-				});
-				codeEditor.setSize("auto","auto")
-				function saveCode(callback){
-						$.ajax({
-							type:'POST',
-							url:'/policy/rule/{{crule["id"]}}',
-							data:{
-								'code':codeEditor.getValue()
-								},
-							success:function(){
-								console.log("save successed")
-								if(callback)
-									callback()
-							},
-							dataType:"json",
-							beforeSend: function(xhr, settings){
-						        	//var csrftoken = getCookie('csrftoken');
-						        	//xhr.setRequestHeader("X-CSRFToken", csrftoken);
-						  },
-						} )
-
-				}
-				codeEditor.on("keyup",function(target,e){
-					if (e.keyCode=="13"){//ente
-						saveCode()
-					}
-				})
-				</script>
-
+				<script src="{{static_url('js/kernel.js')}}"></script>
 			{% end%}
 		</div>
 	</div>

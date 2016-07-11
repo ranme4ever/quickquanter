@@ -22,7 +22,8 @@ class Rule(LoginRequiredHandler):
     def post(self,rule_id):
         code = self.get_argument("code")
         db = dbconnector().db
-        db.execute("update t_rule set code='%s' where id=%s"%(code,rule_id))
+        sql = "update t_rule set code='%s' where id=%s"%(code.replace("'","''").replace("%","%%"),rule_id)
+        db.execute(sql)
         self.write("success")
 
 class RuleCreate(LoginRequiredHandler):

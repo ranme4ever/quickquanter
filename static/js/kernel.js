@@ -34,6 +34,7 @@ codeEditor.on("keyup",function(target,e){
 })
 
 function runRule(){
+     board.innerHTML =""
      uri =  'http://{host}/api/kernels'.replace("{host}",window.location.host)
      $.ajax({
         type:'POST',
@@ -93,9 +94,12 @@ function initsocket(kernelid){
         msg = JSON.parse(e.data)
         switch(msg.msg_type){
             case "stream":
-                console.log(msg.content.text)
-                board.innerHTML = msg.content.text
+                board.innerHTML += msg.content.text
+                break
+            case "execute_reply":
                 interruptKernel(kernel_id)
+                break
+
         }
     }
     ws.onerror = function(e){}

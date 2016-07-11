@@ -29,13 +29,12 @@ body{
 	padding-left:88px;
 }
 .mid-container{
-	border-right:1px solid #C7C7C7;
-	height:100%;
 	padding:0px;
 }
 .right-container{
 	height:100%;
 	padding:0px;
+	border-left:1px solid #C7C7C7;
 }
 .toolbar-container{
 	width:100%;

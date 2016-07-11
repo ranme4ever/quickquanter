@@ -16,7 +16,7 @@ class MainApp(JupyterApp):
         self.app = web.Application(self.handlers,**self.settings)
         self.http_server = httpserver.HTTPServer(self.app)
 
-        self.http_server.listen(80, "127.0.0.1")
+        self.http_server.listen(80)
         #self.app.listen(80)
         self.ioloop = ioloop.IOLoop.current()
 
